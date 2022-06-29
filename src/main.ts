@@ -71,8 +71,9 @@ for(let item of state.emails){
   let liEl = document.createElement("li")
   liEl.className = "emails-list__item"
   liEl.addEventListener("click" , ()=>{
+    mainEl.textContent = ""
     renderSingleEmail()
-    render
+    
   })
 
   let spanEl = document.createElement("span")
@@ -102,16 +103,26 @@ for(let item of state.emails){
 
 
 function renderSingleEmail(){
- for(let item of state.emails) {
+
+
   let sectionEl = document.createElement("section")
   sectionEl.className = "single-email"
 
   let btnEl = document.createElement("button")
   btnEl.className = "single-email__button"
   btnEl.textContent = "⬅Back"
+  btnEl.addEventListener("click", ()=>{
+    sectionEl.textContent =""
+    render()
+  })
+  let mainEl = document.querySelector("main")
+  mainEl.append(sectionEl)
+  sectionEl.append(btnEl)
 
+ for(let item of state.emails) {
   let divEl = document.createElement("div")
   divEl.className = "single-email__sender-section"
+  
    
   let imgEl = document.createElement("img")
   imgEl.className = "single-email__image"
@@ -130,9 +141,8 @@ function renderSingleEmail(){
   pEl.textContent= item.content
 
 
-  let mainEl = document.querySelector("main")
-  mainEl.append(sectionEl)
-  sectionEl.append(btnEl,divEl,h1El,pEl)
+ 
+  sectionEl.append(divEl,h1El,pEl)
   divEl.append(imgEl,spanEl)
 }
 
