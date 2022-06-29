@@ -66,13 +66,13 @@ h1El.textContent = "Inbox"
 let mainEl = document.querySelector("main")
 mainEl.append(h1El,ulEl)
 
-for(let item of state.emails){
+for(let email of state.emails){
 
   let liEl = document.createElement("li")
   liEl.className = "emails-list__item"
   liEl.addEventListener("click" , ()=>{
     mainEl.textContent = ""
-    renderSingleEmail()
+    renderSingleEmail(email)
     
   })
 
@@ -81,15 +81,15 @@ for(let item of state.emails){
   spanEl.textContent = "mark_email_unread"
    let imgEl = document.createElement("img")
    imgEl.className = "emails-list__item__image"
-   imgEl.src = item.img
+   imgEl.src = email.img
 
    let pEl = document.createElement("p")
    pEl.className = "emails-list__item__from"
-   pEl.textContent = item.from
+   pEl.textContent = email.from
 
    let pEl2  = document.createElement("p")
    pEl2.className = "emails-list__item__content"
-   pEl2.textContent = item.content
+   pEl2.textContent = email.content
 
    
 
@@ -102,7 +102,7 @@ for(let item of state.emails){
 
 
 
-function renderSingleEmail(){
+function renderSingleEmail(email: Email){
 
 
   let sectionEl = document.createElement("section")
@@ -115,30 +115,31 @@ function renderSingleEmail(){
     sectionEl.textContent =""
     render()
   })
+
   let mainEl = document.querySelector("main")
   mainEl.append(sectionEl)
   sectionEl.append(btnEl)
 
- for(let item of state.emails) {
+ 
   let divEl = document.createElement("div")
   divEl.className = "single-email__sender-section"
   
    
   let imgEl = document.createElement("img")
   imgEl.className = "single-email__image"
-  imgEl.src = item.img
+  imgEl.src = email.img
 
   let spanEl = document.createElement("span")
   spanEl.className = "single-email__sender"
-  spanEl.textContent = item.emailAddress
+  spanEl.textContent = email.emailAddress
 
   let h1El = document.createElement("h1")
   h1El.className = "single-email__header"
-  h1El.textContent = item.header
+  h1El.textContent = email.header
 
   let pEl = document.createElement("p")
   pEl.className = "single-email__content"
-  pEl.textContent= item.content
+  pEl.textContent= email.content
 
 
  
@@ -146,7 +147,7 @@ function renderSingleEmail(){
   divEl.append(imgEl,spanEl)
 }
 
-}
+
 
 
 
