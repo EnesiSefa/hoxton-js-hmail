@@ -62,21 +62,24 @@ render()
 
 
 function renderEmails(){
-
+ 
   let ulEl = document.createElement("ul")
   ulEl.className = "emails-list"
-let h1El = document.createElement("h1")
-h1El.textContent = "Inbox"
-let mainEl = document.querySelector("main")
-mainEl.append(h1El,ulEl)
-
-for(let email of state.emails){
+ let h1El = document.createElement("h1")
+ h1El.textContent = "Inbox"
+ let mainEl = document.querySelector("main")
+  mainEl.append(h1El,ulEl)
+  
+ const filteredEmails = getFilteredEmails()
+ for(let email of filteredEmails){
 
   let liEl = document.createElement("li")
   liEl.className = "emails-list__item"
   liEl.addEventListener("click" , ()=>{
-    mainEl.textContent = ""
+    
     renderSingleEmail(email)
+    render()
+    mainEl.textContent= ""
     
   })
 
@@ -100,6 +103,7 @@ for(let email of state.emails){
    
    ulEl.append(liEl)
    liEl.append(spanEl,imgEl,pEl,pEl2)
+   
 }}
 
 
@@ -173,6 +177,8 @@ if (inputEl) {
     if (event.key !== 'Enter') return
 
     state.filter = inputEl.value
+    render()
+    
   })
 }
 
