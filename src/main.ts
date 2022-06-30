@@ -2,7 +2,8 @@ import './style.css'
 
 
 type State ={
-  emails : Array<Email> // or Email[]
+  emails : Email[]// or Array<Email>
+  filter : string
 }
 
 type Email = {
@@ -47,11 +48,14 @@ const state : State = {
       read: false
     }
     // feel free to add more emails here
-  ]
+  ],
+  filter: ''
 }
 
 function render(){
   renderEmails()
+  getFilteredEmails()
+  
   
 }
 render()
@@ -150,6 +154,27 @@ function renderSingleEmail(email: Email){
 
 
 
+
+function getFilteredEmails() {
+  return state.emails.filter(
+    email =>
+      email.content.toLowerCase().includes(state.filter.toLowerCase()) ||
+      email.from.toLowerCase().includes(state.filter.toLowerCase())
+  )
+}
+
+  
+    
+ 
+let inputEl = document.querySelector<HTMLInputElement>('.filter-input')
+if (inputEl) {
+  inputEl.addEventListener('keydown', function (event) {
+    if (inputEl == null) return
+    if (event.key !== 'Enter') return
+
+    state.filter = inputEl.value
+  })
+}
 
 
 
