@@ -1,23 +1,20 @@
 import './style.css'
 
-
-type State ={
-  emails : Email[]// or Array<Email>
-  filter : string
+type State = {
+  emails: Email[] // or Array<Email>
+  filter: string
 }
 
 type Email = {
-   
-    from: string,
-    header: string,
-    content: string,
-    emailAddress: string,
-    img: string,
-    read: boolean,
+  from: string
+  header: string
+  content: string
+  emailAddress: string
+  img: string
+  read: boolean
 }
 
-
-const state : State = {
+const state: State = {
   emails: [
     {
       from: 'Nico',
@@ -52,112 +49,91 @@ const state : State = {
   filter: ''
 }
 
-function render(){
+function render() {
   renderEmails()
   getFilteredEmails()
-  
-  
 }
 render()
 
+function renderEmails() {
+  let mainEl = document.querySelector('main')
+  mainEl.textContent = ''
 
-function renderEmails(){
- 
-  let ulEl = document.createElement("ul")
-  ulEl.className = "emails-list"
- let h1El = document.createElement("h1")
- h1El.textContent = "Inbox"
- let mainEl = document.querySelector("main")
-  mainEl.append(h1El,ulEl)
-  
- const filteredEmails = getFilteredEmails()
- for(let email of filteredEmails){
+  let ulEl = document.createElement('ul')
+  ulEl.className = 'emails-list'
 
-  let liEl = document.createElement("li")
-  liEl.className = "emails-list__item"
-  liEl.addEventListener("click" , ()=>{
-    
-    renderSingleEmail(email)
-    render()
-    mainEl.textContent= ""
-    
-  })
+  let h1El = document.createElement('h1')
+  h1El.textContent = 'Inbox'
 
-  let spanEl = document.createElement("span")
-  spanEl.className="emails-list__item__read-icon material-symbols-outlined"
-  spanEl.textContent = "mark_email_unread"
-   let imgEl = document.createElement("img")
-   imgEl.className = "emails-list__item__image"
-   imgEl.src = email.img
+  mainEl.append(h1El, ulEl)
 
-   let pEl = document.createElement("p")
-   pEl.className = "emails-list__item__from"
-   pEl.textContent = email.from
+  const filteredEmails = getFilteredEmails()
+  for (let email of filteredEmails) {
+    let liEl = document.createElement('li')
+    liEl.className = 'emails-list__item'
+    liEl.addEventListener('click', () => {
+      renderSingleEmail(email)
+    })
 
-   let pEl2  = document.createElement("p")
-   pEl2.className = "emails-list__item__content"
-   pEl2.textContent = email.content
+    let spanEl = document.createElement('span')
+    spanEl.className = 'emails-list__item__read-icon material-symbols-outlined'
+    spanEl.textContent = 'mark_email_unread'
+    let imgEl = document.createElement('img')
+    imgEl.className = 'emails-list__item__image'
+    imgEl.src = email.img
 
-   
+    let pEl = document.createElement('p')
+    pEl.className = 'emails-list__item__from'
+    pEl.textContent = email.from
 
-   
-   ulEl.append(liEl)
-   liEl.append(spanEl,imgEl,pEl,pEl2)
-   
-}}
+    let pEl2 = document.createElement('p')
+    pEl2.className = 'emails-list__item__content'
+    pEl2.textContent = email.content
 
+    ulEl.append(liEl)
+    liEl.append(spanEl, imgEl, pEl, pEl2)
+  }
+}
 
+function renderSingleEmail(email: Email) {
+  let mainEl = document.querySelector('main')
+  mainEl.textContent = ''
 
+  let sectionEl = document.createElement('section')
+  sectionEl.className = 'single-email'
 
-
-function renderSingleEmail(email: Email){
-
-
-  let sectionEl = document.createElement("section")
-  sectionEl.className = "single-email"
-
-  let btnEl = document.createElement("button")
-  btnEl.className = "single-email__button"
-  btnEl.textContent = "⬅Back"
-  btnEl.addEventListener("click", ()=>{
-    sectionEl.textContent =""
+  let btnEl = document.createElement('button')
+  btnEl.className = 'single-email__button'
+  btnEl.textContent = '⬅Back'
+  btnEl.addEventListener('click', () => {
     render()
   })
 
-  let mainEl = document.querySelector("main")
   mainEl.append(sectionEl)
   sectionEl.append(btnEl)
 
- 
-  let divEl = document.createElement("div")
-  divEl.className = "single-email__sender-section"
-  
-   
-  let imgEl = document.createElement("img")
-  imgEl.className = "single-email__image"
+  let divEl = document.createElement('div')
+  divEl.className = 'single-email__sender-section'
+
+  let imgEl = document.createElement('img')
+  imgEl.className = 'single-email__image'
   imgEl.src = email.img
 
-  let spanEl = document.createElement("span")
-  spanEl.className = "single-email__sender"
+  let spanEl = document.createElement('span')
+  spanEl.className = 'single-email__sender'
   spanEl.textContent = email.emailAddress
 
-  let h1El = document.createElement("h1")
-  h1El.className = "single-email__header"
+  let h1El = document.createElement('h1')
+  h1El.className = 'single-email__header'
   h1El.textContent = email.header
 
-  let pEl = document.createElement("p")
-  pEl.className = "single-email__content"
-  pEl.textContent= email.content
+  let pEl = document.createElement('p')
+  pEl.className = 'single-email__content'
+  pEl.textContent = email.content
 
-
- 
-  sectionEl.append(divEl,h1El,pEl)
-  divEl.append(imgEl,spanEl)
+  sectionEl.append(divEl, h1El, pEl)
+  divEl.append(imgEl, spanEl)
 }
-
-
-
-
 
 function getFilteredEmails() {
   return state.emails.filter(
@@ -167,9 +143,6 @@ function getFilteredEmails() {
   )
 }
 
-  
-    
- 
 let inputEl = document.querySelector<HTMLInputElement>('.filter-input')
 if (inputEl) {
   inputEl.addEventListener('keydown', function (event) {
@@ -178,12 +151,8 @@ if (inputEl) {
 
     state.filter = inputEl.value
     render()
-    
   })
 }
-
-
-
 
 // Instructions
 // Using the provided emails and template files:
@@ -192,5 +161,4 @@ if (inputEl) {
 // - When a user clicks the email - render the page for that single email
 // - Once the email has been opened at least once - mark it as read
 // - See that search bar? Make it so when a user types something, you only display the emails who's sender's name contains that. (E.g. "nic" should only show Nico's email. "e" should show both Ed's and Government's emails. Take letter case into consideration, too)
-// - Try to make it work when inside the single email view as well! i.e. entering a new search term and hitting enter should take you back to the email list view and show only the emails that match the filter. 
-
+// - Try to make it work when inside the single email view as well! i.e. entering a new search term and hitting enter should take you back to the email list view and show only the emails that match the filter.
